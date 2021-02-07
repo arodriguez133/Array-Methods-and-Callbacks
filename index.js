@@ -54,8 +54,23 @@ Use the higher-order function getWinners to do the following:
 4. Returns the names of all winning countries in an array called `winners` */ 
 
 function getWinners(array, getFinals) {
-    
-}
+    let list = getFinals(array);
+    let finalsTeamResults = list.map((e) => {
+        return {
+            'Home Team Name': e['Home Team Name'],
+            'Home Team Goals': e['Home Team Goals'],
+            'Away Team Name': e['Away Team Name'],
+            'Away Team Goals': e['Away Team Goals'],
+        }
+    })
+    let winner = finalsTeamResults.map((e) => {
+        if(e['Home Team Goals'] > e['Away Team Goals']){
+            return e['Home Team Name'];
+        }else return e['Away Team Name'];
+    })
+    return winner;
+    }
+
 
 
 
@@ -69,8 +84,8 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(array, getYears, getWinners) {
+    //array is the full fifa.js data. 
 }
 
 
