@@ -86,6 +86,14 @@ hint: the strings returned need to exactly match the string in step 4.
 
 function getWinnersByYear(array, getYears, getWinners) {
     //array is the full fifa.js data. 
+    // getYears(array) is an array of years of world cup finals 
+    //getWinners(array) is an array of finals winners. 
+    const years = getYears(array, getFinals);
+    const winners = getWinners(array, getFinals);
+    let string = winners.map(function(x,y){
+        return `In ${years[y]}, ${x} won the world cup!`;
+    })
+    return string;
 }
 
 
