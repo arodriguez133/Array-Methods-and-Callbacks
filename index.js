@@ -108,8 +108,35 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getFinals) {
+   let data = getFinals;
+  //reference back to this and put it through the debugger. Really put effort in understanding how this works as a solution. 
+  // data is a reference to the parameter getFinals
+  // getFinals is an array of objects of world cup finals
+  //copied data is a reference to a function applied to data that iterates over the array. 
+  //This is where is gets tricky... does "e" get assigned to each object within the array?
+/* Lets say that's what "e" does. I returned an object with named keys that I set... then the values I 
+asked for are the property names within each index. If that's the case, then isn't setting the property that is being evaluated
+to names keys a little redundant? How could I fix this... 
+ */
+   const getCopyOfGoals = data.map((e) =>{
+       return {
+           'Home Team Goals': e['Home Team Goals'],
+           'Away Team Goals': e['Away Team Goals'],
+       }
+   })
+    const homeGoals = getCopyOfGoals.map((index) => {
+           return index['Home Team Goals'];
+       })
+    const awayGoals = getCopyOfGoals.map((index)=> {
+        return index['Away Team Goals'];
+    })
+    const reducer = (acc, val) => acc + val;
+    const sumOfHomeGoals = homeGoals.reduce(reducer, 0);
+    const sumOfAwayGoals = awayGoals.reduce(reducer,0);
+    
+//I give up... 
+    
 }
 
 
