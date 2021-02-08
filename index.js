@@ -11,6 +11,7 @@ Practice accessing data by console.log-ing the following pieces of data note, yo
 
 //(c) Home Team goals for 2014 world cup final
 
+
 //(d) Away Team goals for 2014 world cup final
 
 //(e) Winner of 2014 world cup final */
@@ -24,9 +25,10 @@ Use getFinals to do the following:
 hint - you should be looking at the stage key inside of the objects
 */
 
-function getFinals(/* code here */) {
-   /* code here */
-}
+function getFinals(fifaData) {
+  return fifaData.filter((item) =>
+  {return item.Stage === 'Final'})
+};
 
 
 
@@ -36,8 +38,10 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(/* code here */) {
-    /* code here */
+function getYears(array, getFinals) {
+    return getFinals(array).map((item) => {
+        return item.Year;
+    })
 }
 
 
@@ -49,9 +53,24 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
-    /* code here */
-}
+function getWinners(array, getFinals) {
+    let list = getFinals(array);
+    let finalsTeamResults = list.map((e) => {
+        return {
+            'Home Team Name': e['Home Team Name'],
+            'Home Team Goals': e['Home Team Goals'],
+            'Away Team Name': e['Away Team Name'],
+            'Away Team Goals': e['Away Team Goals'],
+        }
+    })
+    let winner = finalsTeamResults.map((e) => {
+        if(e['Home Team Goals'] > e['Away Team Goals']){
+            return e['Home Team Name'];
+        }else return e['Away Team Name'];
+    })
+    return winner;
+    }
+
 
 
 
@@ -65,8 +84,16 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(array, getYears, getWinners) {
+    //array is the full fifa.js data. 
+    // getYears(array) is an array of years of world cup finals 
+    //getWinners(array) is an array of finals winners. 
+    const years = getYears(array, getFinals);
+    const winners = getWinners(array, getFinals);
+    let string = winners.map(function(x,y){
+        return `In ${years[y]}, ${x} won the world cup!`;
+    })
+    return string;
 }
 
 
@@ -81,8 +108,35 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getFinals) {
+   let data = getFinals;
+  //reference back to this and put it through the debugger. Really put effort in understanding how this works as a solution. 
+  // data is a reference to the parameter getFinals
+  // getFinals is an array of objects of world cup finals
+  //copied data is a reference to a function applied to data that iterates over the array. 
+  //This is where is gets tricky... does "e" get assigned to each object within the array?
+/* Lets say that's what "e" does. I returned an object with named keys that I set... then the values I 
+asked for are the property names within each index. If that's the case, then isn't setting the property that is being evaluated
+to names keys a little redundant? How could I fix this... 
+ */
+   const getCopyOfGoals = data.map((e) =>{
+       return {
+           'Home Team Goals': e['Home Team Goals'],
+           'Away Team Goals': e['Away Team Goals'],
+       }
+   })
+    const homeGoals = getCopyOfGoals.map((index) => {
+           return index['Home Team Goals'];
+       })
+    const awayGoals = getCopyOfGoals.map((index)=> {
+        return index['Away Team Goals'];
+    })
+    const reducer = (acc, val) => acc + val;
+    const sumOfHomeGoals = homeGoals.reduce(reducer, 0);
+    const sumOfAwayGoals = awayGoals.reduce(reducer,0);
+    
+//I give up... 
+    
 }
 
 
